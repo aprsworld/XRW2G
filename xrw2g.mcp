@@ -37,7 +37,6 @@ file_009=.
 file_010=.
 file_011=.
 file_012=.
-file_013=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -52,7 +51,6 @@ file_009=no
 file_010=no
 file_011=no
 file_012=no
-file_013=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -67,7 +65,6 @@ file_009=yes
 file_010=yes
 file_011=yes
 file_012=yes
-file_013=yes
 [FILE_INFO]
 file_000=XRW2G.c
 file_001=XRW2G.h
@@ -77,12 +74,11 @@ file_004=C:\Program Files (x86)\PICC\drivers\stddef.h
 file_005=C:\Program Files (x86)\PICC\drivers\string.h
 file_006=C:\Program Files (x86)\PICC\drivers\ctype.h
 file_007=adc_xrw2g.c
-file_008=filter_xrw2g.c
-file_009=interrupt_xrw2g.c
-file_010=live_xrw2g.c
-file_011=modbus_handler_XRW2G.c
-file_012=modbus_slave_XRW2g.c
-file_013=param_xrw2g.c
+file_008=interrupt_xrw2g.c
+file_009=live_xrw2g.c
+file_010=modbus_handler_XRW2G.c
+file_011=modbus_slave_XRW2g.c
+file_012=param_xrw2g.c
 [SUITE_INFO]
 suite_guid={BA86BF99-4C07-4CE2-A9E7-C2A337910996}
 suite_state=

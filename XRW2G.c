@@ -64,8 +64,10 @@ typedef struct {
 	int1 now_adc_reset_count;
 	int1 now_modbus_speed;
 	int1 now_live_send;
+	int1 now_millisecond;
 
 	int16 live_seconds;
+
 } struct_time_keep;
 
 typedef struct {
@@ -108,6 +110,7 @@ void init() {
 	timers.now_adc_reset_count=0;
 	timers.now_modbus_speed=0;
 	timers.now_live_send=0;
+	timers.now_millisecond=0;
 	timers.live_seconds=0;
 
 	for ( i=0 ; i<3 ; i++ ) {
@@ -134,25 +137,12 @@ void init() {
 
 	/* interrupts */
 
-	/* external interrupts for anemometers */
-	ext_int_edge(0,H_TO_L);
-	enable_interrupts(INT_EXT);
-	ext_int_edge(1,H_TO_L);
-	enable_interrupts(INT_EXT1);
-	ext_int_edge(2,H_TO_L);
-	enable_interrupts(INT_EXT2);
-
 	/* interrupt on change handles SYNC_IN and GPS_PPS */
-	enable_interrupts(INT_RB);
+//	enable_interrupts(INT_RB);
 
 	/* 100 microsecond period from 8 MHz oscillator */
 	setup_timer_2(T2_DIV_BY_4,48,1); 
 	enable_interrupts(INT_TIMER2);
-
-	/* 10 millisecond period from 8 MHz oscillator */
-	setup_timer_1(T1_DIV_BY_1 | T1_INTERNAL);
-	set_timer1(45541);
-	enable_interrupts(INT_TIMER1);
 
 	output_low(XBEE_SLEEP);
 	port_b_pullups(TRUE);

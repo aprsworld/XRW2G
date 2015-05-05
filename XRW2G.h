@@ -1,6 +1,7 @@
 #include <18F4523.h>
 #device ADC=12 
 #device *=16
+#DEVICE HIGH_INTS=TRUE
 
 /* leave pages 0 and 1 alone for bootloader */
 //#build(reset=0x800,interrupt=0x808)
