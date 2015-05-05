@@ -141,7 +141,11 @@ void init() {
 //	enable_interrupts(INT_RB);
 
 	/* 100 microsecond period from 8 MHz oscillator */
-	setup_timer_2(T2_DIV_BY_4,48,1); 
+//	setup_timer_2(T2_DIV_BY_4,48,1); 
+
+	/* one periodic interrupt @ 100uS. Generated from system 8 MHz clock */
+	/* prescale=4, match=49, postscale=1. Match is 49 because when match occurs, one cycle is lost */
+	setup_timer_2(T2_DIV_BY_4,49,1); 
 	enable_interrupts(INT_TIMER2);
 
 	output_low(XBEE_SLEEP);

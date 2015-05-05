@@ -70,8 +70,8 @@ void write_default_param_file() {
 	timers.led_on_green=150;
 
 	config.modbus_address=24;
-	//config.modbus_speed=BAUD_9600; 
-	config.modbus_speed=BAUD_19200; 
+	config.modbus_speed=BAUD_9600; 
+	//config.modbus_speed=BAUD_19200; 
 	config.modbus_mode=MODBUS_MODE_RTU;
 
 	config.serial_prefix='Z';
