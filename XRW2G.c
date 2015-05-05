@@ -80,14 +80,14 @@ struct_time_keep timers;
 struct_strobed_data strobed_data;
 
 
-#include "adc.c"
-#include "interrupt.c"
-#include "param.c"
+#include "adc_xrw2g.c"
+#include "interrupt_xrw2g.c"
+#include "param_xrw2g.c"
 
 #include "modbus_slave_XRW2G.c"
 #include "modbus_handler_XRW2G.c"
 
-#include "live.c"
+#include "live_xrw2g.c"
 
 
 
