@@ -45,7 +45,7 @@ typedef struct {
 
 	int16 sequence_number;
 	int16 uptime_minutes;
-	int16 interval_milliseconds;
+	int16 interval_10milliseconds;
 
 	int8 factory_unlocked;
 
@@ -64,7 +64,7 @@ typedef struct {
 	int1 now_adc_reset_count;
 	int1 now_modbus_speed;
 	int1 now_live_send;
-	int1 now_millisecond;
+	int1 now_10millisecond;
 
 	int16 live_seconds;
 
@@ -72,7 +72,7 @@ typedef struct {
 
 typedef struct {
 	int16 strobed_data[43];
-	int16 interval_milliseconds;
+	int16 interval_10milliseconds;
 } struct_strobed_data;
 
 /* global structures */
@@ -110,7 +110,7 @@ void init() {
 	timers.now_adc_reset_count=0;
 	timers.now_modbus_speed=0;
 	timers.now_live_send=0;
-	timers.now_millisecond=0;
+	timers.now_10millisecond=0;
 	timers.live_seconds=0;
 
 	for ( i=0 ; i<3 ; i++ ) {
@@ -125,13 +125,13 @@ void init() {
 	current.modbus_last_error=0;
 	current.sequence_number=0;
 	current.uptime_minutes=0;
-	current.interval_milliseconds=0;
+	current.interval_10milliseconds=0;
 	current.adc_buffer_index=0;
 	current.factory_unlocked=0;
 
 	/* strobed data */
 	memset(&strobed_data, 0x00, sizeof(strobed_data));
-	strobed_data.interval_milliseconds=65535;
+	strobed_data.interval_10milliseconds=65535;
 
 
 
@@ -139,9 +139,6 @@ void init() {
 
 	/* interrupt on change handles SYNC_IN and GPS_PPS */
 //	enable_interrupts(INT_RB);
-
-	/* 100 microsecond period from 8 MHz oscillator */
-//	setup_timer_2(T2_DIV_BY_4,48,1); 
 
 	/* one periodic interrupt @ 100uS. Generated from system 8 MHz clock */
 	/* prescale=4, match=49, postscale=1. Match is 49 because when match occurs, one cycle is lost */
@@ -171,11 +168,11 @@ void periodic_10millisecond(void) {
 				current.pulse_period[2]=0;
 
 	/* seconds since last query */
-	if ( current.interval_milliseconds < 65535 ) {
-		current.interval_milliseconds++;
+	if ( current.interval_10milliseconds < 65535 ) {
+		current.interval_10milliseconds++;
 	}
-	if ( strobed_data.interval_milliseconds < 65535 ) {
-		strobed_data.interval_milliseconds++;
+	if ( strobed_data.interval_10milliseconds < 65535 ) {
+		strobed_data.interval_10milliseconds++;
 	}
 
 	/* seconds */
@@ -291,8 +288,9 @@ void main(void) {
 	for ( ; ; ) {
 		restart_wdt();
 
-		if ( timers.now_millisecond ) {
+		if ( timers.now_10millisecond ) {
 			periodic_10millisecond();
+			timers.now_10millisecond=0;
 		}
 
 		if ( timers.now_adc_sample ) {

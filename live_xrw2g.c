@@ -192,8 +192,8 @@ void live_send(void) {
 	buff[93]=make8(current.uptime_minutes,0);
 
 	disable_interrupts(GLOBAL);
-	buff[94]=make8(current.interval_milliseconds,1);
-	buff[95]=make8(current.interval_milliseconds,0);
+	buff[94]=make8(current.interval_10milliseconds,1);
+	buff[95]=make8(current.interval_10milliseconds,0);
 	enable_interrupts(GLOBAL);
 
 	lCRC=crc_chk(buff+1,95);
@@ -217,8 +217,7 @@ void live_send(void) {
 	current.sequence_number++;
 	reset_counters();
 
-	disable_interrupts(GLOBAL);
-	current.interval_milliseconds=0;
-	enable_interrupts(GLOBAL);
+
+	current.interval_10milliseconds=0;
 }
 

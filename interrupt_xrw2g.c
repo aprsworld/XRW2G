@@ -110,7 +110,7 @@ void isr_100us(void) {
 	tick++;
 	if ( 100 == tick ) {
 		tick=0;
-		timers.now_millisecond=1;
+		timers.now_10millisecond=1;
 	}
 }
 

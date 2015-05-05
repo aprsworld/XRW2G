@@ -39,7 +39,7 @@ void reset_counters(void) {
 	current.pulse_max_period[2]=0;
 	
 
-	current.interval_milliseconds=0;
+	current.interval_10milliseconds=0;
 
 	enable_interrupts(GLOBAL);
 }
@@ -157,8 +157,8 @@ int16 map_modbus(int16 addr) {
 
 		/* status */
 		case 42: return (int16) current.sequence_number++;
-		case 43: return (int16) current.interval_milliseconds; /* milliseconds since last query */
-		case 44: return (int16) current.uptime_minutes; /* uptime seconds */
+		case 43: return (int16) current.interval_10milliseconds; /* ticks since last query */
+		case 44: return (int16) current.uptime_minutes; /* uptime minutes */
 		/* 45 triggers a new measurement */
 		case 45: reset_counters(); return (int16) 0;
 		/* 46 triggers a reset of pulse sum */
@@ -413,7 +413,7 @@ void strobe_data(void) {
 
 	reset_counters();
 
-	strobed_data.interval_milliseconds=0;
+	strobed_data.interval_10milliseconds=0;
 }
 
 void modbus_process(void) {
