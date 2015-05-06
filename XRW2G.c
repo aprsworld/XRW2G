@@ -21,6 +21,8 @@ typedef struct {
 
 	int16 modbus_strobe_address;
 	int16 modbus_strobe_register;
+
+	int8 sync_in_enable;
 } struct_config;
 
 
@@ -137,9 +139,6 @@ void init() {
 
 	/* interrupts */
 
-	/* interrupt on change handles SYNC_IN and GPS_PPS */
-//	enable_interrupts(INT_RB);
-
 	/* one periodic interrupt @ 100uS. Generated from system 8 MHz clock */
 	/* prescale=4, match=49, postscale=1. Match is 49 because when match occurs, one cycle is lost */
 	setup_timer_2(T2_DIV_BY_4,49,1); 
@@ -157,7 +156,7 @@ void periodic_10millisecond(void) {
 	static int16 adcTicks=0;
 	static int8 ticks=0;
 
-	output_high(PIN_D5);
+
 
 	/* anemometers quit moving */
 	if ( 0xffff == timers.pulse_period[0] )
@@ -169,6 +168,7 @@ void periodic_10millisecond(void) {
 
 	/* seconds since last query */
 	if ( current.interval_10milliseconds < 65535 ) {
+		output_high(PIN_D5);
 		current.interval_10milliseconds++;
 	}
 	if ( strobed_data.interval_10milliseconds < 65535 ) {
@@ -236,6 +236,11 @@ void main(void) {
 
 	if ( config.modbus_address > 127 || config.modbus_speed > 1 ) {
 		write_default_param_file();
+	}
+
+	/* interrupt on change handles SYNC_IN and GPS_PPS */
+	if ( config.sync_in_enable ) {
+		enable_interrupts(INT_RB);
 	}
 
 	/* LED test sequence */

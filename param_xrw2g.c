@@ -35,43 +35,12 @@ void write_param_file() {
 	write_eeprom(PARAM_CRC_ADDRESS,crc);
 }
 
-void write_test_param_file() {
-	/* red LED for 1.5 seconds */
-	timers.led_on_green=150;
-
-	config.modbus_address=24;
-	config.modbus_speed=BAUD_9600; 
-	config.modbus_mode=MODBUS_MODE_RTU;
-
-	config.serial_prefix='A';
-	config.serial_number=2702;
-
-	config.adc_average_mode[0]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[1]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[2]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[3]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[4]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[5]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[6]=ADC_AVERAGE_NORMAL;
-	config.adc_average_mode[7]=ADC_AVERAGE_NORMAL;
-	config.adc_sample_ticks=20;
-
-	config.worldData_seconds=60;
-	config.worldData_trigger_prefix='A';
-	config.worldData_trigger_number=2688;
-
-	/* write them so next time we use from EEPROM */
-	write_param_file();
-
-}
-
 void write_default_param_file() {
 	/* red LED for 1.5 seconds */
 	timers.led_on_green=150;
 
 	config.modbus_address=24;
 	config.modbus_speed=BAUD_9600; 
-	//config.modbus_speed=BAUD_19200; 
 	config.modbus_mode=MODBUS_MODE_RTU;
 
 	config.serial_prefix='Z';
@@ -98,6 +67,7 @@ void write_default_param_file() {
 
 	config.modbus_strobe_address=100; /* 256 => disabled */
 	config.modbus_strobe_register=100;
+	config.sync_in_enable=0;
 	
 	/* write them so next time we use from EEPROM */
 	write_param_file();

@@ -6,7 +6,7 @@
 #define MAX_STROBED_REGISTER 143
 
 #define MIN_CONFIG_REGISTER  1000
-#define MAX_CONFIG_REGISTER  1017
+#define MAX_CONFIG_REGISTER  1018
 
 #define MIN_COEFF_REGISTER   1100
 #define MAX_COEFF_REGISTER   1108
@@ -181,7 +181,7 @@ int16 map_modbus(int16 addr) {
 		case 1002: return (int16) 'X';
 		case 1003: return (int16) 'G';
 		case 1004: return (int16) 'X';
-		case 1005: return (int16) 1;
+		case 1005: return (int16) 2;
 		case 1006: return (int16) config.modbus_address;
 		case 1007: return (int16) config.modbus_speed;
 		case 1008: return (int16) config.modbus_mode;
@@ -194,6 +194,7 @@ int16 map_modbus(int16 addr) {
 		case 1015: return (int16) config.io_mode[IO_LINE_XBEE_CTS];
 		case 1016: return (int16) config.modbus_strobe_address;
 		case 1017: return (int16) config.modbus_strobe_register;
+		case 1018: return (int16) config.sync_in_enable;
 
 		case 1100: return (int16) config.adc_average_mode[0];
 		case 1101: return (int16) config.adc_average_mode[1];
@@ -356,6 +357,12 @@ exception modbus_write_register(int16 address, int16 value) {
 		case 1017:
 			config.modbus_strobe_register=value;
 			break;
+		case 1018:
+			if ( value > 1 ) 
+				return ILLEGAL_DATA_VALUE;
+			config.sync_in_enable=value;
+			break;
+
 
 		case 1108:
 			/* ADC sample interval */
