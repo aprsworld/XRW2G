@@ -48,6 +48,9 @@ void isr_100us(void) {
 			if ( current.pulse_period[0] < current.pulse_min_period[0] ) {
 				current.pulse_min_period[0]=current.pulse_period[0];
 			}
+			if ( current.pulse_period[0] > current.pulse_max_period[0] ) {
+				current.pulse_max_period[0]=current.pulse_period[0];
+			}
 			ext0_state=0;
 		}
 		if ( 0 == ext0_state ) {
@@ -71,6 +74,9 @@ void isr_100us(void) {
 			if ( current.pulse_period[1] < current.pulse_min_period[1] ) {
 				current.pulse_min_period[1]=current.pulse_period[1];
 			}
+			if ( current.pulse_period[1] > current.pulse_max_period[1] ) {
+				current.pulse_max_period[1]=current.pulse_period[1];
+			}
 			ext1_state=0;
 		}
 		if ( 0 == ext1_state ) {
@@ -93,6 +99,9 @@ void isr_100us(void) {
 			current.pulse_period[2]=timers.pulse_period[2];
 			if ( current.pulse_period[2] < current.pulse_min_period[2] ) {
 				current.pulse_min_period[2]=current.pulse_period[2];
+			}
+			if ( current.pulse_period[2] > current.pulse_max_period[2] ) {
+				current.pulse_max_period[2]=current.pulse_period[2];
 			}
 			ext2_state=0;
 		}
